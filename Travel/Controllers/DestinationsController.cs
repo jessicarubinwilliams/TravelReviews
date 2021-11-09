@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Travel.Models;
+using System.Linq;
 
 namespace Travel.Controllers
 {
@@ -46,6 +47,40 @@ namespace Travel.Controllers
         }
 
         return destination;
+    }
+    
+    // PUT: api/destinations/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Destination destination)
+    {
+      if (id != destination.DestinationId)
+      {
+        return BadRequest();
+      }
+
+      _db.Entry(destination).State = EntityState.Modified;
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!DestinationExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return NoContent();
+    }
+     private bool DestinationExists(int id)
+    {
+      return _db.Destinations.Any(e => e.DestinationId == id);
     }
   }
 }
