@@ -8,7 +8,7 @@ namespace Travel.Models
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
-    public DateTime VisitDate { get; set; }
+    public string VisitDate { get; set; }
     public int Rating { get; set; }
     public string Review { get; set; }
 
