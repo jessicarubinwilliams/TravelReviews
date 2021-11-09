@@ -18,13 +18,41 @@ namespace Travel.Controllers
       _db = db;
     }
 
-    // GET api/destinations
+    // GET: api/Destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get()
+    public async Task<ActionResult<IEnumerable<Destination>>> Get(string city, string state, int rating, string country, string visitDate)
     {
-      return await _db.Destinations.ToListAsync();
-    }
+      var query = _db.Destinations.AsQueryable();
 
+      if (city != null)
+      {
+        query = query.Where(entry => entry.City == city);
+      }
+
+      if (state != null)
+      {
+        query = query.Where(entry => entry.State == state);
+      }
+
+//This does not work because ints can't be null. START HERE
+      if (rating != null)
+      {
+        query = query.Where(entry => entry.Rating == rating);
+      }
+
+      if (country != null)
+      {
+        query = query.Where(entry => entry.Country == country);
+      }
+
+      if (visitDate != null)
+      {
+        query = query.Where(entry => entry.VisitDate == visitDate);
+      }
+
+      return await query.ToListAsync();
+    }
+    
     // POST api/destinations
     [HttpPost]
     public async Task<ActionResult<Destination>> Post(Destination destination)
