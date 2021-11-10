@@ -49,7 +49,7 @@ namespace Travel.Controllers
         query = query.Where(entry => entry.VisitDate == visitDate);
       }
 
-      return await query.ToListAsync();
+      return await query.OrderByDescending(entry => entry.Rating).ToListAsync();
     }
     
     // POST api/destinations
