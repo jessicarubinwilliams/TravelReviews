@@ -20,7 +20,7 @@ namespace Travel.Controllers
 
     // GET: api/Destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get(string city, string state, int rating, string country, string visitDate)
+    public async Task<ActionResult<IEnumerable<Destination>>> Get(string city, string state, string rating, string country, string visitDate)
     {
       var query = _db.Destinations.AsQueryable();
 
@@ -34,7 +34,6 @@ namespace Travel.Controllers
         query = query.Where(entry => entry.State == state);
       }
 
-//This does not work because ints can't be null. START HERE
       if (rating != null)
       {
         query = query.Where(entry => entry.Rating == rating);
