@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Travel.Models;
 using System.Linq;
+using System;
 
 namespace Travel.Controllers
 {
@@ -75,12 +76,23 @@ namespace Travel.Controllers
 
         return destination;
     }
-    
-    // PUT: api/destinations/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Destination destination)
+
+     //GET api/Destinations/random
+    [HttpGet("random")]
+    public async Task<ActionResult<Destination>> GetDestination(string random)
     {
-      if (id != destination.DestinationId)
+        int count = _db.Destinations.Count();
+        Random rng = new Random();
+        int id = rng.Next(1, count);
+        var destination = await _db.Destinations.FindAsync(id);
+        return destination;
+    }
+    
+    // PUT: api/destinations/user
+    [HttpPut("{id}/{userName}")]
+    public async Task<IActionResult> Put(int id, Destination destination, string userName)
+    {
+      if (id != destination.DestinationId || userName != destination.UserName)
       {
         return BadRequest();
       }
@@ -111,10 +123,16 @@ namespace Travel.Controllers
     }
 
     // DELETE: api/destinations/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteDestination(int id)
+    [HttpDelete("{id}/{userName}")]
+    public async Task<IActionResult> DeleteDestination(int id, string userName)
     {
       var destination = await _db.Destinations.FindAsync(id);
+
+      if(userName != destination.UserName)
+      {
+        return BadRequest();
+      } else {
+      
       if (destination == null)
       {
         return NotFound();
@@ -124,6 +142,7 @@ namespace Travel.Controllers
       await _db.SaveChangesAsync();
 
       return NoContent();
+      }
     }
   }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Travel.Migrations
@@ -14,12 +13,12 @@ namespace Travel.Migrations
                 {
                     DestinationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    City = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    State = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    Country = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    VisitDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Review = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
+                    City = table.Column<string>(type: "varchar(85) CHARACTER SET utf8mb4", maxLength: 85, nullable: false),
+                    State = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "varchar(56) CHARACTER SET utf8mb4", maxLength: 56, nullable: false),
+                    VisitDate = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: false),
+                    Rating = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    Review = table.Column<string>(type: "varchar(200) CHARACTER SET utf8mb4", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
